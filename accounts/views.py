@@ -112,7 +112,6 @@ def outgoings_history(request):
             date_from = form.cleaned_data['date_from']
             date_to = form.cleaned_data['date_to']
             search_result = search_result.filter(date__range=(date_from, date_to))
-            print(search_result)
     else:
         displaydata = Outgoings.objects.filter(user=request.user).order_by('-date')
         return render(request, 'outgoings_history.html', {'data': displaydata})
