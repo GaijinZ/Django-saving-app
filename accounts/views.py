@@ -103,6 +103,7 @@ def user_history(request):
     return render(request, 'history.html', context)
 
 
+# Functions below full history look with dates range to view.
 @login_required(login_url='/accounts/login')
 def outgoings_history(request):
     search_result = Outgoings.objects.filter(user=request.user).order_by('-date')

@@ -9,6 +9,7 @@ from savings.models import MoneyBox
 from savings.models import Obligations
 
 
+# User register form with email added.
 class NewUserForm(UserCreationForm):
     email = forms.EmailField(required=True)
 
@@ -24,6 +25,7 @@ class NewUserForm(UserCreationForm):
         return user
 
 
+# Below all form to add goal/outgoings/money into a monebox/ monethy obligations.
 class AddGoalForm(forms.ModelForm):
 
     class Meta:
@@ -52,6 +54,7 @@ class AddObligationForm(forms.ModelForm):
         exclude = ['user', 'date', ]
 
 
+# Form to pick a date range to filter history of added goal/outgoings/obligations and moneybox.
 DateInput = partial(forms.DateInput, {'class': 'datepicker'})
 
 

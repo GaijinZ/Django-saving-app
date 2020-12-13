@@ -11,6 +11,7 @@ from accounts.forms import AddGoalForm, \
     AddObligationForm
 
 
+# Redirecting logged user to the summary page after enter homepage.
 def home(request):
     if request.user.is_authenticated:
         return redirect('http://127.0.0.1:8000/summary/')
@@ -18,6 +19,7 @@ def home(request):
         return render(request, 'home.html')
 
 
+# Below all form to add goal/outgoings/money into a monebox/ monethy obligations
 @login_required(login_url='/accounts/login')
 def your_goal(request):
     goal_display = YourGoal.objects.filter(user=request.user).latest('id')
@@ -85,12 +87,13 @@ def your_obligations(request):
     return render(request, 'obligations.html', context)
 
 
+# Summary page with data to view for user with a little history look.
 @login_required(login_url='/accounts/login')
 def account_summary(request):
     last_30 = dt.date.today() - dt.timedelta(days=30)
 
     goal_display = YourGoal.objects.filter(user=request.user).latest('id')
-    outgoings_display = Outgoings.objects.filter(user=request.user).order_by('-date')
+    outgoings_display = Outgoings.objects.filter(user=request.user).order_by('-date')[:3]
     piggybank_sum_display = MoneyBox.objects.filter(user=request.user).aggregate(Sum('wolumen'))['wolumen__sum']
     obligations_display = Obligations.objects.filter(user=request.user).order_by('-date')[:3]
     outgoings_sum_display = Outgoings.objects.filter(user=request.user, date__gt=last_30).aggregate(Sum('suma'))['suma__sum']
