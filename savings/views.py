@@ -3,7 +3,6 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
 import datetime as dt
 
-
 from .models import YourGoal, Outgoings, MoneyBox, Obligations
 from accounts.forms import AddGoalForm, \
     AddOutgoingForm, \
@@ -54,8 +53,8 @@ def your_outgoings(request):
 
 
 @login_required(login_url='/accounts/login')
-def your_piggybank(request):
-    piggybank_display = MoneyBox.objects.filter(user=request.user).order_by('-date')
+def your_moneybox(request):
+    moneybox_display = MoneyBox.objects.filter(user=request.user).order_by('-date')
     if request.method == 'POST':
         form = AddMoneyBoxForm(request.POST)
         if form.is_valid:
@@ -66,8 +65,8 @@ def your_piggybank(request):
     else:
         form = AddMoneyBoxForm()
 
-    context = {'form': form, 'piggybank_display': piggybank_display}
-    return render(request, 'piggybank.html', context)
+    context = {'form': form, 'moneybox_display': moneybox_display}
+    return render(request, 'moneybox.html', context)
 
 
 @login_required(login_url='/accounts/login')
@@ -103,14 +102,11 @@ def account_summary(request):
     piggybank = piggybank_sum_display
     obligations = obligations_display
 
-    qs = Outgoings.objects.filter(user=request.user, date__gt=last_30)
-
     context = {'goal': goal,
                'outgoings': outgoings,
                'piggybank': piggybank,
                'obligations': obligations,
                'outgoings_sum_display': outgoings_sum_display,
-               'obligations_sum_display': obligations_sum_display,
-               'qs': qs}
+               'obligations_sum_display': obligations_sum_display}
 
     return render(request, 'summary.html', context)

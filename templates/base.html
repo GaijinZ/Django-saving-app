@@ -30,10 +30,10 @@
       });
     </script>
 </head>
-<body bgcolor="white">
+<body bgcolor="#bdbdbd">
 
 <div class="container">
-    <nav class="navbar nav-extended blue lighten-3">
+    <nav class="navbar nav-extended light-blue accent-2">
         <div class="nav-wrapper">
             {% if user.is_authenticated %}
             <b><a href="{% url 'savings:summary' %}">Profit</a></b>
@@ -55,7 +55,7 @@
             <li class="tab"><a class="active" href="{% url 'savings:goal' %}">Cel</a></li>
             <li class="tab"><a href="{% url 'savings:outgoings' %}">Wydatki</a></li>
             <li class="tab"><a href="{% url 'savings:obligations' %}">Zobowiązania</a></li>
-            <li class="tab"><a href="{% url 'savings:piggybank' %}">Skarbonka</a></li>
+            <li class="tab"><a href="{% url 'savings:moneybox' %}">Skarbonka</a></li>
           </ul>
         </div>
     </nav>

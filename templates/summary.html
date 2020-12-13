@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col s1 m5">
+        <div class="col s5 m5">
           <div class="card blue darken-1">
             <div class="card-content white-text">
               <span class="card-title">Cel</span>
@@ -16,13 +16,13 @@
                 {% endif %}
             </div>
               <div class="card-action">
-                  <a href="{% url 'accounts:history' %}">Historia</a>
+                  <a href="{% url 'accounts:your_goal_history' %}">Historia</a>
               </div>
           </div>
         </div>
     </div>
     <div class="row">
-        <div class="col s15 m5 offset-s7">
+        <div class="col l5 offset-l7 s10">
             <div class="card blue darken-1">
                 <div class="card-content white-text">
                     <span class="card-title">W skarbonce masz już</span>
@@ -33,7 +33,7 @@
                     {% endif %}
                 </div>
                 <div class="card-action">
-                    <a href="{% url 'accounts:history' %}">Historia</a>
+                    <a href="{% url 'accounts:moneybox_history' %}">Historia</a>
                 </div>
             </div>
         </div>
@@ -46,7 +46,7 @@
           <div class="card blue darken-1">
             <div class="card-content white-text">
               <span class="card-title">Ostatnie wydatki</span>
-                <h5>Suma Twoich wydatków to:</h5>
+                <h5>Suma Twoich wydatków z 30 dni to:</h5>
                 {% if outgoings_sum_display == None %}
                 <p>0 zł</p>
                 {% else %}
@@ -66,7 +66,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col s5 m5">
+        <div class="col l5 offset-l7 s10">
             <div class="card blue darken-1">
                 <div class="card-content white-text">
                     <span class="card-title">Zobowiązania</span>
@@ -83,7 +83,7 @@
                     {% endfor %}
                 </div>
                 <div class="card-action">
-                    <a href="{% url 'accounts:history' %}">Historia</a>
+                    <a href="{% url 'accounts:obligations_history' %}">Historia</a>
                 </div>
             </div>
         </div>

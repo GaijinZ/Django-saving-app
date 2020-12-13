@@ -8,21 +8,14 @@
         {{ form.as_p }}
         <br>
         {% if goal_display == None %}
-        <button class="btn waves-effect waves-light" type="Submit">Ustaw Cel
+        <button class="btn waves-effect waves-light light-blue accent-2" type="Submit">Ustaw Cel
             <i class="material-icons right">send</i>
         </button>
         {% else %}
-        <button class="btn waves-effect waves-light" type="Submit">Ustaw nowy cel
+        <button class="btn waves-effect waves-light light-blue accent-2" type="Submit">Ustaw nowy cel
             <i class="material-icons right">send</i>
         </button>
         {% endif %}
     </div>
 </form>
-
-<div class="container">
-
-    <h4>{{ goal_display.cel }}</h4>
-    <p>{{ goal_display.date }}</p>
-
-</div>
 {% endblock %}

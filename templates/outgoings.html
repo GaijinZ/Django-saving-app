@@ -7,16 +7,9 @@
         <h5>Dodaj wydatek</h5>
         {{ form.as_p }}
         <br>
-        <button class="btn waves-effect waves-light" type="Submit">Dodaj
+        <button class="btn waves-effect waves-light light-blue accent-2" type="Submit">Dodaj
         <i class="material-icons right">send</i>
         </button>
     </div>
 </form>
-<div class="container">
-    {% for outgoing in outgoings_display %}
-        <h4>{{ outgoing.kategoria|capfirst }}</h4>
-        <h4>{{ outgoing.suma }} PLN</h4>
-        <p>{{ outgoing.date }}</p>
-    {% endfor %}
-</div>
 {% endblock %}

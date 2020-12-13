@@ -19,7 +19,6 @@
                     <thead>
                     <tr>
                         <th>Tydzień</th>
-                        <th>Kategoria</th>
                         <th>Suma</th>
                     </tr>
                     </thead>
@@ -27,8 +26,7 @@
                     {% for result in data %}
                     <tr>
                         <td>{{ result.date }}</td>
-                        <td>{{ result.kategoria }}</td>
-                        <td>{{ result.suma }} zł</td>
+                        <td>{{ result.wolumen }} zł</td>
                     {% endfor %}
                     </tr>
                     </tbody>

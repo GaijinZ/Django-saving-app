@@ -3,11 +3,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.db.models import Sum
-from django.db.models.functions import ExtractWeek
+import datetime as dt
 
-from .forms import NewUserForm, PickADate
-from savings.models import YourGoal, Outgoings, Obligations, MoneyBox
+from .forms import NewUserForm, PickADate, HolderForm
+from savings.models import *
 
 
 # Create your views here.
@@ -56,56 +55,24 @@ def register(request):
 
 @login_required(login_url='/accounts/login')
 def profile(request):
-    return render(request, 'profile.html')
+    user = request.user
+    form = HolderForm(instance=user)
 
-
-@login_required(login_url='/accounts/login')
-def user_history(request):
     if request.method == 'POST':
-        form = PickADate(request.POST)
+        form = HolderForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
-            datef = request.POST.get['datef']
-            datet = request.POST.get['datet']
-            try:
-                t = Outgoings.objects.filter(user=request.user, date__lte=datet, date__gte=datef)
-            except:
-                t = None
-            return render(request, 'history.html', {'t': t})
-    else:
-        form = PickADate()
+            userprofile = form.save()
+            userprofile.user = request.user
+            userprofile.save()
 
-    goal_history = YourGoal.objects.filter(user=request.user).order_by('date')
-
-    outgoings_history = Outgoings.objects.filter(user=request.user) \
-        .annotate(tydzien=ExtractWeek('date')) \
-        .values('tydzien') \
-        .annotate(razem=Sum('suma')) \
-        .order_by('tydzien')
-
-    obligations_history = Obligations.objects.filter(user=request.user) \
-        .annotate(tydzien=ExtractWeek('date')) \
-        .values('tydzien') \
-        .annotate(razem=Sum('kwota')) \
-        .order_by('tydzien')
-
-    moneybox_history = MoneyBox.objects.filter(user=request.user) \
-        .annotate(tydzien=ExtractWeek('date')) \
-        .values('tydzien') \
-        .annotate(razem=Sum('wolumen')) \
-        .order_by('tydzien')
-
-    context = {'goal_history': goal_history,
-               'outgoings_history': outgoings_history,
-               'obligations_history': obligations_history,
-               'moneybox_history': moneybox_history,
-               'form': form}
-
-    return render(request, 'history.html', context)
+    context = {'form': form}
+    return render(request, 'profile.html', context)
 
 
 # Functions below full history look with dates range to view.
 @login_required(login_url='/accounts/login')
 def outgoings_history(request):
+    last_30 = dt.date.today() - dt.timedelta(days=30)
     search_result = Outgoings.objects.filter(user=request.user).order_by('-date')
     if request.method == 'POST':
         form = PickADate(request.POST)
@@ -113,6 +80,52 @@ def outgoings_history(request):
             date_from = form.cleaned_data['date_from']
             date_to = form.cleaned_data['date_to']
             search_result = search_result.filter(date__range=(date_from, date_to))
-    else:
-        displaydata = Outgoings.objects.filter(user=request.user).order_by('-date')
-        return render(request, 'outgoings_history.html', {'data': displaydata})
+            return render(request, 'outgoings_history.html', {'data': search_result})
+
+    display_data = Outgoings.objects.filter(user=request.user, date__gt=last_30).order_by('-date')
+    return render(request, 'outgoings_history.html', {'data': display_data})
+
+
+@login_required(login_url='/accounts/login')
+def obligations_history(request):
+    search_result = Obligations.objects.filter(user=request.user).order_by('-date')
+    if request.method == "POST":
+        form = PickADate(request.POST)
+        if form.is_valid():
+            date_from = form.cleaned_data['date_from']
+            date_to = form.cleaned_data['date_to']
+            search_result = search_result.filter(date__range=(date_from, date_to))
+            return render(request, 'obligations_history.html', {'data': search_result})
+
+    display_data = Obligations.objects.filter(user=request.user).order_by('-date')[:10]
+    return render(request, 'obligations_history.html', {'data': display_data})
+
+
+@login_required(login_url='/accounts/login')
+def your_goal_history(request):
+    search_result = YourGoal.objects.filter(user=request.user).order_by('-date')
+    if request.method == 'POST':
+        form = PickADate(request.POST)
+        if form.is_valid():
+            date_from = form.cleaned_data['date_from']
+            date_to = form.cleaned_data['date_to']
+            search_result = search_result.filter(date__range=(date_from, date_to))
+            return render(request, 'your_gol_history.html', {'data': search_result})
+
+    display_data = YourGoal.objects.filter(user=request.user).order_by('-date')
+    return render(request, 'your_goal_history.html', {'data': display_data})
+
+
+@login_required(login_url='/accounts/login')
+def moneybox_history(request):
+    search_result = MoneyBox.objects.filter(user=request.user).order_by('-date')
+    if request.method == 'POST':
+        form = PickADate(request.POST)
+        if form.is_valid():
+            date_from = form.cleaned_data['date_from']
+            date_to = form.cleaned_data['date_to']
+            search_result = search_result.filter(date__range=(date_from, date_to))
+            return render(request, 'moneybox_history.html', {'data': search_result})
+
+    display_data = MoneyBox.objects.filter(user=request.user).order_by('-date')
+    return render(request, 'moneybox_history.html', {'data': display_data})

@@ -7,16 +7,9 @@
         <h5>Dodaj Zobowiązania</h5>
         {{ form.as_p }}
         <br>
-        <button class="btn waves-effect waves-light" type="Submit">Dodaj
+        <button class="btn waves-effect waves-light light-blue accent-2" type="Submit">Dodaj
         <i class="material-icons right">send</i>
         </button>
     </div>
 </form>
-<div class="container">
-    {% for obligation in obligations_display %}
-        <h4>{{ obligation.kategoria|capfirst }}</h4>
-        <h4>{{ obligation.kwota }}</h4>
-        <p>{{ obligation.date }}</p>
-    {% endfor %}
-</div>
 {% endblock %}

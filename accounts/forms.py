@@ -3,10 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from functools import partial
 
-from savings.models import YourGoal
-from savings.models import Outgoings
-from savings.models import MoneyBox
-from savings.models import Obligations
+from savings.models import *
 
 
 # User register form with email added.
@@ -23,6 +20,13 @@ class NewUserForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+
+class HolderForm(forms.ModelForm):
+
+    class Meta:
+        model = Profile
+        exclude = ['user', ]
 
 
 # Below all form to add goal/outgoings/money into a monebox/ monethy obligations.
