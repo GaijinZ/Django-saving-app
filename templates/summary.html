@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col s1 m5">
+          <div class="card blue darken-1">
+            <div class="card-content white-text">
+              <span class="card-title">Cel</span>
+                 <h5>Twój cel to:</h5>
+                {% if goal == None %}
+                <p>0 zł</p>
+                {% else %}
+                <h5>{{ goal.cel }} zł</h5>
+                <p>{{ goal.date }}</p>
+                {% endif %}
+            </div>
+              <div class="card-action">
+                  <a href="{% url 'accounts:history' %}">Historia</a>
+              </div>
+          </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s15 m5 offset-s7">
+            <div class="card blue darken-1">
+                <div class="card-content white-text">
+                    <span class="card-title">W skarbonce masz już</span>
+                    {% if piggybank == None %}
+                    <h5>skarbonka jest pusta</h5>
+                    {% else %}
+                    <b>{{ piggybank }} zł</b>
+                    {% endif %}
+                </div>
+                <div class="card-action">
+                    <a href="{% url 'accounts:history' %}">Historia</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col s5 m5">
+          <div class="card blue darken-1">
+            <div class="card-content white-text">
+              <span class="card-title">Ostatnie wydatki</span>
+                <h5>Suma Twoich wydatków to:</h5>
+                {% if outgoings_sum_display == None %}
+                <p>0 zł</p>
+                {% else %}
+                <b>{{ outgoings_sum_display }} zł</b>
+                {% endif %}
+                <h5>Twoje ostatnie wydatki to: </h5>
+                {% for out in outgoings %}
+                <b>{{ out.kategoria|capfirst }}</b>
+                <p>{{ out.suma }} zł</p>
+                <p>{{ out.date }}</p>
+                {% endfor %}
+            </div>
+              <div class="card-action">
+                  <a href="{% url 'accounts:outgoings_history' %}">Historia</a>
+              </div>
+          </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s5 m5">
+            <div class="card blue darken-1">
+                <div class="card-content white-text">
+                    <span class="card-title">Zobowiązania</span>
+                    {% if obligations == None %}
+                    <p>0 zł</p>
+                    {% else %}
+                    <b>{{ obligations_sum_display }} zł</b>
+                    {% endif %}
+                    <h5>Twoje miesięczne zobowiązania to:</h5>
+                    {% for duty in obligations %}
+                    <b>{{ duty.kategoria|capfirst }}</b>
+                    <p>{{ duty.kwota }} zł</p>
+                    <p>{{ duty.date }}</p>
+                    {% endfor %}
+                </div>
+                <div class="card-action">
+                    <a href="{% url 'accounts:history' %}">Historia</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

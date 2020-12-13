@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Profit</title>
+     <!-- Compiled and minified CSS -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+<script>
+  $(document).ready(function(){
+    $('.datepicker').datepicker();
+  });
+</script>
+    <script>
+       document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('select');
+        var instances = M.FormSelect.init(elems, options);
+      });
+    </script>
+</head>
+<body bgcolor="white">
+
+<div class="container">
+    <nav class="navbar nav-extended blue lighten-3">
+        <div class="nav-wrapper">
+            {% if user.is_authenticated %}
+            <b><a href="{% url 'savings:summary' %}">Profit</a></b>
+            {% else %}
+            <b><a href="/">Profit</a></b>
+            {% endif %}
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+              {% if user.is_authenticated %}
+              <li><a href="{% url 'accounts:profile' %}">Cześć {{ user.username }}</a></li>
+              <li><a href="{% url 'accounts:logout' %}">Wyloguj</a></li>
+              {% else %}
+              <li><a href="{% url 'accounts:register' %}">Zarejestruj</a></li>
+              <li><a href="{% url 'accounts:login' %}">Zaloguj</a></li>
+              {% endif %}
+          </ul>
+        </div>
+        <div class="nav-content">
+          <ul class="tabs tabs-transparent">
+            <li class="tab"><a class="active" href="{% url 'savings:goal' %}">Cel</a></li>
+            <li class="tab"><a href="{% url 'savings:outgoings' %}">Wydatki</a></li>
+            <li class="tab"><a href="{% url 'savings:obligations' %}">Zobowiązania</a></li>
+            <li class="tab"><a href="{% url 'savings:piggybank' %}">Skarbonka</a></li>
+          </ul>
+        </div>
+    </nav>
+</div>
+
+{% if messages %}
+    {% for message in messages %}
+        <script>M.toast({html: "{{ message }}", classes: 'blue rounded', displayLength: 5000})</script>
+    {% endfor %}
+{% endif %}
+
+<div class="cointener">
+    {% block content %}
+
+    {% endblock %}
+</div>
+</body>

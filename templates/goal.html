@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="post">
+    <div class="container">
+        {% csrf_token %}
+        <h5>Wpisz kwotę jaką chcesz uzbierać</h5>
+        {{ form.as_p }}
+        <br>
+        {% if goal_display == None %}
+        <button class="btn waves-effect waves-light" type="Submit">Ustaw Cel
+            <i class="material-icons right">send</i>
+        </button>
+        {% else %}
+        <button class="btn waves-effect waves-light" type="Submit">Ustaw nowy cel
+            <i class="material-icons right">send</i>
+        </button>
+        {% endif %}
+    </div>
+</form>
+
+<div class="container">
+
+    <h4>{{ goal_display.cel }}</h4>
+    <p>{{ goal_display.date }}</p>
+
+</div>
+{% endblock %}

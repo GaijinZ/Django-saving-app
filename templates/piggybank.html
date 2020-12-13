@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="post">
+    <div class="container">
+        {% csrf_token %}
+        <h5>Dodaj do skarbonki</h5>
+        {{ form.as_p }}
+        <br>
+        <button class="btn waves-effect waves-light" type="Submit">Dodaj
+        <i class="material-icons right">send</i>
+        </button>
+    </div>
+</form>
+<div class="container">
+    {% for piggybank in piggybank_display %}
+        <h4>{{ piggybank.wolumen }}</h4>
+        <p>{{ piggybank.date }}</p>
+    {% endfor %}
+</div>
+{% endblock %}

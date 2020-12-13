@@ -1,0 +1,14 @@
+.module {
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 50%;
+    margin: 0 auto;
+}
+.text-white {
+    font-size: 2rem;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 900;
+    color: white;
+    text-transform: uppercase;
+    position: relative
+}

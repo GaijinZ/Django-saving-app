@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<br>
+    <form method="POST">
+        <div class="container">
+        {% csrf_token %}
+        {{ form.as_p }}
+            <br>
+            <button class="btn waves-effect waves-light" type="Submit">Zarejestruj
+            <i class="material-icons right">send</i>
+            </button>
+            <br>
+            <br>
+            Jeżeli masz już konto <a href="login"><strong>Zaloguj</strong></a>
+        </div>
+    </form>
+{% endblock %}

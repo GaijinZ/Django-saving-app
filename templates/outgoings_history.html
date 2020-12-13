@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container">
+    <div class="centered">
+        <center>
+            <h5>Wyszukaj historie</h5>
+            <br/>
+            <form method="POST">
+                {% csrf_token %}
+            Od :<input type="date" name="od">
+            Do :<input type="date" name="do">
+            <button class="btn waves-effect waves-light" type="Submit" value="Search">Szukaj
+            <i class="material-icons right">send</i>
+            </button>
+            <hr/>
+            <table>
+                    <thead>
+                    <tr>
+                        <th>Tydzień</th>
+                        <th>Kategoria</th>
+                        <th>Suma</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for result in data %}
+                    <tr>
+                        <td>{{ result.date }}</td>
+                        <td>{{ result.kategoria }}</td>
+                        <td>{{ result.suma }} zł</td>
+                    {% endfor %}
+                    </tr>
+                    </tbody>
+            </table>
+            </form>
+        </center>
+    </div>
+</div>
+
+{% endblock %}
