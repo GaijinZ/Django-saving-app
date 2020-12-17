@@ -93,10 +93,10 @@ def account_summary(request):
 
     goal_display = YourGoal.objects.filter(user=request.user).latest('id')
     outgoings_display = Outgoings.objects.filter(user=request.user).order_by('-date')[:3]
-    piggybank_sum_display = MoneyBox.objects.filter(user=request.user).aggregate(Sum('wolumen'))['wolumen__sum']
+    piggybank_sum_display = MoneyBox.objects.filter(user=request.user).aggregate(Sum('suma'))['suma__sum']
     obligations_display = Obligations.objects.filter(user=request.user).order_by('-date')[:3]
     outgoings_sum_display = Outgoings.objects.filter(user=request.user, date__gt=last_30).aggregate(Sum('suma'))['suma__sum']
-    obligations_sum_display = Obligations.objects.filter(user=request.user).aggregate(Sum('kwota'))['kwota__sum']
+    obligations_sum_display = Obligations.objects.filter(user=request.user).aggregate(Sum('suma'))['suma__sum']
     goal = goal_display
     outgoings = outgoings_display
     piggybank = piggybank_sum_display

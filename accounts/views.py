@@ -4,6 +4,8 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 import datetime as dt
+from itertools import chain
+from django.db.models import Q
 
 from .forms import NewUserForm, PickADate, HolderForm
 from savings.models import *
@@ -55,15 +57,14 @@ def register(request):
 
 @login_required(login_url='/accounts/login')
 def profile(request):
-    user = request.user
-    form = HolderForm(instance=user)
-
+    form = HolderForm(instance=request.user)
     if request.method == 'POST':
-        form = HolderForm(request.POST, request.FILES, instance=user)
+        form = HolderForm(request.POST, request.FILES, instance=request.user.profile)
         if form.is_valid():
-            userprofile = form.save()
-            userprofile.user = request.user
-            userprofile.save()
+            user_img = form.save(commit=False)
+            user_img.user = request.user
+            user_img.image = request.FILES['image']
+            user_img.save()
 
     context = {'form': form}
     return render(request, 'profile.html', context)
@@ -110,7 +111,7 @@ def your_goal_history(request):
             date_from = form.cleaned_data['date_from']
             date_to = form.cleaned_data['date_to']
             search_result = search_result.filter(date__range=(date_from, date_to))
-            return render(request, 'your_gol_history.html', {'data': search_result})
+            return render(request, 'your_goal_history.html', {'data': search_result})
 
     display_data = YourGoal.objects.filter(user=request.user).order_by('-date')
     return render(request, 'your_goal_history.html', {'data': display_data})
@@ -129,3 +130,5 @@ def moneybox_history(request):
 
     display_data = MoneyBox.objects.filter(user=request.user).order_by('-date')
     return render(request, 'moneybox_history.html', {'data': display_data})
+
+

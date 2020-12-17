@@ -15,9 +15,10 @@ class Profile(models.Model):
 
 class YourGoal(models.Model):
     date = models.DateField(default=datetime.now)
-    cel = models.IntegerField()
+    suma = models.IntegerField()
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
+    model_name = 'YourGoal'
     objects = models.Manager()
 
 
@@ -27,6 +28,7 @@ class Outgoings(models.Model):
     suma = models.IntegerField()
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
+    model_name = 'Outgoings'
     objects = models.Manager()
 
     def __str__(self):
@@ -38,18 +40,20 @@ class Outgoings(models.Model):
 
 class MoneyBox(models.Model):
     date = models.DateField(default=datetime.now)
-    wolumen = models.IntegerField()
+    suma = models.IntegerField()
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
+    model_name = 'Moneybox'
     objects = models.Manager()
 
 
 class Obligations(models.Model):
     date = models.DateField(default=datetime.now)
     kategoria = models.TextField(max_length=20)
-    kwota = models.IntegerField()
+    suma = models.IntegerField()
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
+    model_name = 'Obligations'
     objects = models.Manager()
 
     def __str__(self):

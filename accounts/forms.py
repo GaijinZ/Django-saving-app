@@ -26,7 +26,7 @@ class HolderForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        exclude = ['user', ]
+        fields = ['image', ]
 
 
 # Below all form to add goal/outgoings/money into a monebox/ monethy obligations.

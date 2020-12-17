@@ -11,7 +11,7 @@
                 {% if goal == None %}
                 <p>0 zł</p>
                 {% else %}
-                <h5>{{ goal.cel }} zł</h5>
+                <h5>{{ goal.suma }} zł</h5>
                 <p>{{ goal.date }}</p>
                 {% endif %}
             </div>
@@ -78,7 +78,7 @@
                     <h5>Twoje miesięczne zobowiązania to:</h5>
                     {% for duty in obligations %}
                     <b>{{ duty.kategoria|capfirst }}</b>
-                    <p>{{ duty.kwota }} zł</p>
+                    <p>{{ duty.suma }} zł</p>
                     <p>{{ duty.date }}</p>
                     {% endfor %}
                 </div>

@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Profit</title>
      <!-- Compiled and minified CSS -->
-
+    <link rel="stylesheet" type="text/css" href="{% static 'expenses/style/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
     <!-- Compiled and minified JavaScript -->
@@ -30,13 +30,13 @@
       });
     </script>
 </head>
-<body bgcolor="#bdbdbd">
+<body>
 
 <div class="container">
-    <nav class="navbar nav-extended light-blue accent-2">
+    <nav class="navbar nav-extended light-blue accent-2 fixed">
         <div class="nav-wrapper">
             {% if user.is_authenticated %}
-            <b><a href="{% url 'savings:summary' %}">Profit</a></b>
+            <b><a href="{% url 'savings:summary' %}" class="brand-logo"> <i class="material-icons">cloud</i>Profit</a></b>
             {% else %}
             <b><a href="/">Profit</a></b>
             {% endif %}
